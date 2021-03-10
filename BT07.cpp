@@ -196,7 +196,8 @@ int main() {
 }*/
 
 //Bai C2
-/*void turtleStep(int& move) {
+/*int turtleStep() {
+	int move = 0;
 	int randNumb = rand() % 10;
 	switch (randNumb) {
 	case 0: case 1: case 2: case 3: case 4: {
@@ -215,9 +216,11 @@ int main() {
 		break;
 	}
 	}
+	return move;
 }
 
-void rabbitStep(int& move) {
+int rabbitStep() {
+	int move = 0;
 	int randNumb = rand() % 10;
 	switch (randNumb) {
 	case 0: case 1: {
@@ -246,6 +249,7 @@ void rabbitStep(int& move) {
 		break;
 	}
 	}
+	return move;
 }
 
 void createSlope(int *step) {
@@ -254,33 +258,17 @@ void createSlope(int *step) {
 	}
 }
 
-void rabbitPosCheck(int& rabbitPos) {
-	int move;
-	rabbitStep(move);
-	rabbitPos += move;
-	if (rabbitPos < 0) {
-		rabbitPos = 0;
+void run(int& pos, int (*step)()) {
+	pos += step();
+	if (pos < 0) {
+		pos = 0;
 	}
-	if (rabbitPos > 70) {
-		rabbitPos = 70;
+	if (pos > 70) {
+		pos = 70;
 	}
-	cout << "Rabbit's position: " << rabbitPos << endl;
 }
 
-void turtlePosCheck(int& turtlePos) {
-	int move;
-	turtleStep(move);
-	turtlePos += move;
-	if (turtlePos < 0) {
-		turtlePos = 0;
-	}
-	if (turtlePos > 70) {
-		turtlePos = 70;
-	}
-	cout << "Rabbit's position: " << turtlePos << endl;
-}
-
-void run(int& rabbitPos, int& turtlePos, int *step) {
+void printScreen(int& rabbitPos, int& turtlePos, int *step) {
 	cout << "Finish: " << ((rabbitPos >= 70) ? "Rabbit" : " ") << ((turtlePos >= 70) ? "Turtle" : " ") << endl;
 	for (int i = 70 - 1; i > 0; i--) {
 		int count = 0;
@@ -301,13 +289,13 @@ int main() {
 	int step[70];
 	createSlope(&step[0]);
 	int turtlePos = 0, rabbitPos = 0;
-	run(rabbitPos, turtlePos, step);
+	printScreen(rabbitPos, turtlePos, step);
 	while (turtlePos < 70 && rabbitPos < 70) {
 		string a;
 		cin >> a;
-		rabbitPosCheck(rabbitPos);
-		turtlePosCheck(turtlePos);
-		run(rabbitPos, turtlePos, step);
+		run(rabbitPos, rabbitStep);
+		run(turtlePos, turtleStep);
+		printScreen(rabbitPos, turtlePos, step);
 	}
 	if (rabbitPos == 70) {
 		cout << "The rabbit won!" << endl;

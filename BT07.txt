@@ -26,3 +26,5 @@ B3.
 char c = ‘C';
 double *p = &c;
 //lỗi gán con trỏ trỏ đến biến double cho biến có dạng char
+
+D1.iv  D2.iii D3.ii D4.ii D5.i D6.iv D7.iii
